@@ -9,7 +9,7 @@ Aplicação web completa com **Spring Boot + Angular** que utiliza **Spring AI**
 ## 👥 Integrantes e RMs
 *   **Victor** — RM560087
 *   **Luan Noqueli Klochko** — RM560313
-*   **Renato** — RM560928
+*   **Lucas Higuti Fontanezi** — RM561120
 ---
 
 ---
