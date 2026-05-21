@@ -1,0 +1,54 @@
+<div class="page">
+  <div class="page-header">
+    <h1>💬 Chat Nutricional</h1>
+    <p class="page-subtitle">Conversação direta com LLM — tire suas dúvidas sobre nutrição</p>
+    <span class="badge">Chat</span>
+  </div>
+
+  <div class="messages-area">
+    @if (messages.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🥗</span>
+        <p>Faça uma pergunta sobre nutrição, dieta ou alimentos!</p>
+        <div class="suggestions">
+          <button class="suggestion" (click)="input = 'Quais são os benefícios da proteína para o organismo?'">Benefícios da proteína</button>
+          <button class="suggestion" (click)="input = 'Como montar uma dieta equilibrada?'">Dieta equilibrada</button>
+          <button class="suggestion" (click)="input = 'Quais alimentos aumentam a energia?'">Alimentos energéticos</button>
+        </div>
+      </div>
+    }
+
+    @for (msg of messages; track $index) {
+      <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+        <span class="msg-avatar">{{ msg.role === 'user' ? '👤' : '🤖' }}</span>
+        <div class="msg-bubble">
+          <p class="msg-text">{{ msg.content }}</p>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="message assistant">
+        <span class="msg-avatar">🤖</span>
+        <div class="msg-bubble">
+          <div class="typing-indicator">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-area">
+    <textarea
+      [(ngModel)]="input"
+      (keydown)="onKeydown($event)"
+      placeholder="Digite sua pergunta sobre nutrição..."
+      rows="1"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="send()" [disabled]="!input.trim() || loading" class="send-btn">
+      {{ loading ? '...' : '➤' }}
+    </button>
+  </div>
+</div>

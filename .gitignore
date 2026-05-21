@@ -1,0 +1,25 @@
+# Maven
+nutri-ai-backend/target/
+*.class
+*.jar
+*.war
+
+# Environment — NUNCA commitar arquivos com chaves de API
+.env
+*.env
+nutri-ai-backend/src/main/resources/application.properties
+
+# Node
+nutri-ai-frontend/node_modules/
+nutri-ai-frontend/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

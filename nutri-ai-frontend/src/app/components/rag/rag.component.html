@@ -1,0 +1,58 @@
+<div class="page">
+  <div class="page-header">
+    <h1>📚 Base de Conhecimento</h1>
+    <p class="page-subtitle">RAG — respostas fundamentadas em documentos nutricionais indexados</p>
+    <span class="badge badge-purple">RAG</span>
+  </div>
+
+  <div class="rag-info">
+    <p>📖 A base contém documentos sobre: proteínas, carboidratos, gorduras, fibras, vitaminas, hidratação, IMC, dieta mediterrânea, emagrecimento, hipertrofia, alimentos ultraprocessados e jejum intermitente.</p>
+  </div>
+
+  <div class="messages-area">
+    @if (messages.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">📚</span>
+        <p>Faça perguntas sobre nutrição com base no conhecimento indexado</p>
+        <div class="suggestions-grid">
+          @for (s of suggestions; track $index) {
+            <button class="suggestion" (click)="useSuggestion(s)">{{ s }}</button>
+          }
+        </div>
+      </div>
+    }
+
+    @for (msg of messages; track $index) {
+      <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+        <span class="msg-avatar">{{ msg.role === 'user' ? '👤' : '📚' }}</span>
+        <div class="msg-bubble">
+          <p class="msg-text">{{ msg.content }}</p>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="message assistant">
+        <span class="msg-avatar">📚</span>
+        <div class="msg-bubble">
+          <div class="typing-indicator">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-area">
+    <textarea
+      [(ngModel)]="input"
+      (keydown)="onKeydown($event)"
+      placeholder="Pesquise na base de conhecimento nutricional..."
+      rows="1"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="send()" [disabled]="!input.trim() || loading" class="send-btn">
+      {{ loading ? '...' : '➤' }}
+    </button>
+  </div>
+</div>

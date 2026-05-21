@@ -1,0 +1,77 @@
+<div class="page">
+  <div class="page-header">
+    <h1>🔧 Tool Calling</h1>
+    <p class="page-subtitle">O LLM decide automaticamente quais ferramentas usar para responder</p>
+    <span class="badge badge-orange">Tool Calling</span>
+  </div>
+
+  <div class="tools-info">
+    <h3>Ferramentas disponíveis:</h3>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <span class="tool-icon">⚖️</span>
+        <div>
+          <strong>Calcular IMC</strong>
+          <p>Índice de Massa Corporal com classificação</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <span class="tool-icon">🔥</span>
+        <div>
+          <strong>Calorias Diárias</strong>
+          <p>TDEE baseado em dados pessoais e atividade</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <span class="tool-icon">🥩</span>
+        <div>
+          <strong>Proteína Recomendada</strong>
+          <p>Necessidade proteica por objetivo</p>
+        </div>
+      </div>
+      <div class="tool-card">
+        <span class="tool-icon">🍎</span>
+        <div>
+          <strong>Info Nutricional</strong>
+          <p>Dados de alimentos da base local</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h3>Exemplos de perguntas:</h3>
+    <div class="examples-list">
+      @for (ex of examples; track $index) {
+        <button class="example-btn" (click)="useExample(ex)">{{ ex }}</button>
+      }
+    </div>
+  </div>
+
+  <div class="input-area">
+    <textarea
+      [(ngModel)]="input"
+      (keydown)="onKeydown($event)"
+      placeholder="Ex: Tenho 30 anos, peso 80kg, altura 1.80m, sou homem e pratico exercícios moderados..."
+      rows="3"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="send()" [disabled]="!input.trim() || loading" class="send-btn">
+      {{ loading ? 'Calculando...' : 'Calcular →' }}
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>IA chamando ferramentas de cálculo...</p>
+    </div>
+  }
+
+  @if (result) {
+    <div class="result-card">
+      <h3>📊 Resultado</h3>
+      <p class="result-text">{{ result }}</p>
+    </div>
+  }
+</div>

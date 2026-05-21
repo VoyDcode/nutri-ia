@@ -1,0 +1,110 @@
+<div class="page">
+  <div class="page-header">
+    <h1>📊 Análise Nutricional Estruturada</h1>
+    <p class="page-subtitle">O LLM retorna uma resposta tipada como objeto Java — Structured Output</p>
+    <span class="badge badge-blue">Structured Output</span>
+  </div>
+
+  <div class="examples-section">
+    <h3>Exemplos de refeições:</h3>
+    <div class="examples-list">
+      @for (ex of examples; track $index) {
+        <button class="example-btn" (click)="useExample(ex)">{{ ex }}</button>
+      }
+    </div>
+  </div>
+
+  <div class="input-section">
+    <textarea
+      [(ngModel)]="input"
+      placeholder="Descreva uma refeição para análise nutricional completa..."
+      rows="3"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="analyze()" [disabled]="!input.trim() || loading" class="analyze-btn">
+      {{ loading ? 'Analisando...' : '🔍 Analisar Refeição' }}
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Gerando análise estruturada...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-card">{{ error }}</div>
+  }
+
+  @if (analysis) {
+    <div class="analysis-result">
+      <div class="result-header">
+        <h3>{{ analysis.mealDescription }}</h3>
+        <span class="rating-badge" [style.background]="getRatingColor() + '25'" [style.color]="getRatingColor()" [style.border-color]="getRatingColor() + '60'">
+          {{ analysis.nutritionRating }}
+        </span>
+      </div>
+
+      <div class="macros-grid">
+        <div class="macro-card calories">
+          <span class="macro-value">{{ analysis.totalCalories }}</span>
+          <span class="macro-label">kcal total</span>
+        </div>
+        <div class="macro-card protein">
+          <span class="macro-value">{{ analysis.totalProteinGrams | number:'1.1-1' }}g</span>
+          <span class="macro-label">Proteína</span>
+        </div>
+        <div class="macro-card carbs">
+          <span class="macro-value">{{ analysis.totalCarbsGrams | number:'1.1-1' }}g</span>
+          <span class="macro-label">Carboidratos</span>
+        </div>
+        <div class="macro-card fat">
+          <span class="macro-value">{{ analysis.totalFatGrams | number:'1.1-1' }}g</span>
+          <span class="macro-label">Gorduras</span>
+        </div>
+      </div>
+
+      @if (analysis.foods && analysis.foods.length > 0) {
+        <div class="foods-table">
+          <h4>Alimentos analisados</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Quantidade</th>
+                <th>Kcal</th>
+                <th>Prot.</th>
+                <th>Carb.</th>
+                <th>Gord.</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (food of analysis.foods; track $index) {
+                <tr>
+                  <td>{{ food.name }}</td>
+                  <td>{{ food.quantity }}</td>
+                  <td>{{ food.calories }}</td>
+                  <td>{{ food.proteinGrams | number:'1.1-1' }}g</td>
+                  <td>{{ food.carbsGrams | number:'1.1-1' }}g</td>
+                  <td>{{ food.fatGrams | number:'1.1-1' }}g</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @if (analysis.recommendations && analysis.recommendations.length > 0) {
+        <div class="recommendations">
+          <h4>💡 Recomendações</h4>
+          <ul>
+            @for (rec of analysis.recommendations; track $index) {
+              <li>{{ rec }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  }
+</div>

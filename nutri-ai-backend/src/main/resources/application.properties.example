@@ -1,0 +1,8 @@
+spring.application.name=nutri-ai
+
+# Cole sua chave da OpenAI aqui e renomeie este arquivo para application.properties
+spring.ai.openai.api-key=SUA_CHAVE_AQUI
+spring.ai.openai.chat.options.model=gpt-4o-mini
+spring.ai.openai.embedding.options.model=text-embedding-3-small
+
+server.port=8080

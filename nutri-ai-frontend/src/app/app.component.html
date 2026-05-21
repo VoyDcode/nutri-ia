@@ -1,0 +1,54 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">🥗</span>
+      <span class="brand-name">NutriAI</span>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/chat" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">💬</span>
+        <div class="nav-text">
+          <span class="nav-label">Chat</span>
+          <span class="nav-desc">Conversação com LLM</span>
+        </div>
+      </a>
+      <a routerLink="/tools" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🔧</span>
+        <div class="nav-text">
+          <span class="nav-label">Tool Calling</span>
+          <span class="nav-desc">Ferramentas externas</span>
+        </div>
+      </a>
+      <a routerLink="/analysis" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <div class="nav-text">
+          <span class="nav-label">Análise Estruturada</span>
+          <span class="nav-desc">Structured Output</span>
+        </div>
+      </a>
+      <a routerLink="/rag" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📚</span>
+        <div class="nav-text">
+          <span class="nav-label">Base de Conhecimento</span>
+          <span class="nav-desc">RAG</span>
+        </div>
+      </a>
+      <a routerLink="/agent" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🤖</span>
+        <div class="nav-text">
+          <span class="nav-label">Agente IA</span>
+          <span class="nav-desc">Agent com memória</span>
+        </div>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span>Java Advanced — FIAP</span>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

@@ -1,0 +1,55 @@
+<div class="page">
+  <div class="page-header">
+    <div class="header-row">
+      <div>
+        <h1>🤖 NutriAgent</h1>
+        <p class="page-subtitle">Agente autônomo com memória de conversa e ferramentas integradas</p>
+        <span class="badge badge-red">Agent</span>
+      </div>
+      <button class="reset-btn" (click)="resetSession()" title="Iniciar nova sessão">
+        🔄 Nova Sessão
+      </button>
+    </div>
+    <div class="session-info">
+      <span>🔐 Sessão: {{ sessionId.slice(0, 8) }}...</span>
+      <span>💬 {{ messages.length }} mensagens</span>
+    </div>
+  </div>
+
+  <div class="messages-area">
+    @for (msg of messages; track $index) {
+      <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+        <span class="msg-avatar">{{ msg.role === 'user' ? '👤' : '🤖' }}</span>
+        <div class="msg-bubble">
+          <p class="msg-text">{{ msg.content }}</p>
+          <span class="msg-time">{{ msg.timestamp | date:'HH:mm' }}</span>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="message assistant">
+        <span class="msg-avatar">🤖</span>
+        <div class="msg-bubble">
+          <div class="typing-indicator">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="thinking-label">Agente pensando e usando ferramentas...</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-area">
+    <textarea
+      [(ngModel)]="input"
+      (keydown)="onKeydown($event)"
+      placeholder="Converse com o agente... Ele lembra tudo que você disse!"
+      rows="1"
+      [disabled]="loading"
+    ></textarea>
+    <button (click)="send()" [disabled]="!input.trim() || loading" class="send-btn">
+      {{ loading ? '...' : '➤' }}
+    </button>
+  </div>
+</div>
